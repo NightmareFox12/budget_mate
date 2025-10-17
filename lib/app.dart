@@ -1,4 +1,5 @@
 import 'package:budget_mate/theme/dark.dart';
+import 'package:budget_mate/theme/light.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -13,6 +14,8 @@ class AppDart extends HookWidget {
     return MaterialApp(
       title: 'App durisima',
       darkTheme: BudgetMateDarkTheme().theme,
+      theme: BudgetMateLightTheme().theme,
+      themeMode: lightTheme.value ? ThemeMode.light : ThemeMode.dark,
       home: Scaffold(
         appBar: AppBar(
           title: Text('Buget Mate'),
