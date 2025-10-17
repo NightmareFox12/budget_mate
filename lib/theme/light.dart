@@ -1,10 +1,12 @@
+import 'package:budget_mate/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 final class BudgetMateLightTheme {
   final theme = ThemeData.light().copyWith(
-    buttonTheme: ButtonThemeData().copyWith(
-      buttonColor: Color.fromARGB(255, 67, 255, 217),
+    buttonTheme: ButtonThemeData().copyWith(),
+    appBarTheme: AppBarTheme().copyWith(backgroundColor: budgetPrimary(false)),
+    navigationRailTheme: NavigationRailThemeData().copyWith(
+      backgroundColor: budgetPrimary(false),
     ),
-    appBarTheme: AppBarTheme().copyWith(backgroundColor: Color(0xff034034)),
   );
 }
