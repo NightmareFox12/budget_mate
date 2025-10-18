@@ -1,5 +1,5 @@
 name: budget_mate
-description: "A new Flutter project."
+description: 'A new Flutter project.'
 publish_to: 'none'
 version: 0.1.0
 
@@ -10,8 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_hooks: ^0.21.3
-  shared_preferences: 2.5.3
-
+  shared_preferences: ^2.5.3
+  fl_chart: ^1.1.1
 
 dev_dependencies:
   flutter_test:

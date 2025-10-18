@@ -2,8 +2,7 @@ import 'package:budget_mate/theme/dark.dart';
 import 'package:budget_mate/theme/light.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-
-// import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppDart extends HookWidget {
   const AppDart({super.key});
@@ -13,17 +12,22 @@ class AppDart extends HookWidget {
     //states
     final lightTheme = useState<bool>(false);
 
-    // Future<void> getUserTheme() async {
-    //   final SharedPreferencesAsync prefs = SharedPreferencesAsync();
-    //   final bool userTheme = (await prefs.getBool('userTheme')) ?? false;
+    Future<void> getUserTheme() async {
+      final SharedPreferencesAsync prefs = SharedPreferencesAsync();
+      final bool userTheme = (await prefs.getBool('userTheme')) ?? false;
 
-    //   lightTheme.value = userTheme;
-    // }
+      lightTheme.value = userTheme;
+    }
 
-    // useEffect(() {
-    //   getUserTheme();
-    //   return null;
-    // });
+    Future<void> saveUserTheme(bool light) async {
+      final SharedPreferencesAsync prefs = SharedPreferencesAsync();
+      await prefs.setBool('userTheme', light);
+    }
+
+    useEffect(() {
+      getUserTheme();
+      return null;
+    }, []);
 
     return MaterialApp(
       title: 'App durisima',
@@ -37,7 +41,10 @@ class AppDart extends HookWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: IconButton.filled(
-                onPressed: () => lightTheme.value = !lightTheme.value,
+                onPressed: () async {
+                  lightTheme.value = !lightTheme.value;
+                  await saveUserTheme(lightTheme.value);
+                },
                 icon: Icon(lightTheme.value ? Icons.light_mode : Icons.bedtime),
               ),
             ),
@@ -54,25 +61,10 @@ class AppDart extends HookWidget {
               ),
               destinations: [
                 NavigationRailDestination(
-                  icon: Icon(Icons.man_4_outlined),
-                  label: Text('mierda'),
+                  icon: Icon(Icons.home),
+                  label: Text('Inicio'),
                 ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.man_4_outlined),
-                  label: Text('mierda'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.man_4_outlined),
-                  label: Text('mierda'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.man_4_outlined),
-                  label: Text('mierda'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.man_4_outlined),
-                  label: Text('mierda'),
-                ),
+          
               ],
             ),
             const VerticalDivider(thickness: 1, width: 1),
