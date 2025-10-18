@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:fl_chart/fl_chart.dart';
+
 class AppDart extends HookWidget {
   const AppDart({super.key});
 
@@ -64,10 +66,28 @@ class AppDart extends HookWidget {
                   icon: Icon(Icons.home),
                   label: Text('Inicio'),
                 ),
-          
               ],
             ),
             const VerticalDivider(thickness: 1, width: 1),
+
+            Center(
+              child: AspectRatio(
+                aspectRatio: 2.0,
+                child: LineChart(
+                  LineChartData(
+                    // titlesData: FlTitlesData(
+                    //   show: true,
+                    //   rightTitles: AxisTitles(
+                    //     sideTitles: SideTitles(showTitles: false),
+                    //   ),
+                    // ),
+                    lineBarsData: [
+                      LineChartBarData(spots: [FlSpot(8, 2), FlSpot(4, 1)]),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
 
