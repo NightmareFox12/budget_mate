@@ -1,4 +1,4 @@
-import 'package:budget_mate/theme/colors.dart';
+import 'package:budget_mate/core/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 final class BudgetMateDarkTheme {

@@ -1,9 +1,10 @@
-import 'package:budget_mate/theme/dark.dart';
-import 'package:budget_mate/theme/light.dart';
+import 'package:budget_mate/core/theme/dark.dart';
+import 'package:budget_mate/core/theme/light.dart';
+import 'package:budget_mate/presentation/widgets/sidebar.dart';
+import 'package:budget_mate/presentation/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:fl_chart/fl_chart.dart';
 
 class AppDart extends HookWidget {
@@ -14,16 +15,12 @@ class AppDart extends HookWidget {
     //states
     final lightTheme = useState<bool>(false);
 
+    //functions
     Future<void> getUserTheme() async {
       final SharedPreferencesAsync prefs = SharedPreferencesAsync();
       final bool userTheme = (await prefs.getBool('userTheme')) ?? false;
 
       lightTheme.value = userTheme;
-    }
-
-    Future<void> saveUserTheme(bool light) async {
-      final SharedPreferencesAsync prefs = SharedPreferencesAsync();
-      await prefs.setBool('userTheme', light);
     }
 
     useEffect(() {
@@ -37,38 +34,14 @@ class AppDart extends HookWidget {
       theme: BudgetMateLightTheme().theme,
       themeMode: lightTheme.value ? ThemeMode.light : ThemeMode.dark,
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Buget Mate'),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: IconButton.filled(
-                onPressed: () async {
-                  lightTheme.value = !lightTheme.value;
-                  await saveUserTheme(lightTheme.value);
-                },
-                icon: Icon(lightTheme.value ? Icons.light_mode : Icons.bedtime),
-              ),
-            ),
-          ],
+        appBar: BudgetTopAppBar(
+          isLightTheme: lightTheme.value,
+          changeTheme: () => lightTheme.value = !lightTheme.value,
         ),
         body: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            NavigationRail(
-              selectedIndex: 0,
-              minWidth: 100,
-              labelType: NavigationRailLabelType.all,
-              selectedLabelTextStyle: TextStyle(
-                color: Color.fromARGB(255, 97, 97, 235),
-              ),
-              destinations: [
-                NavigationRailDestination(
-                  icon: Icon(Icons.home),
-                  label: Text('Inicio'),
-                ),
-              ],
-            ),
+            Sidebar(),
             const VerticalDivider(thickness: 1, width: 1),
 
             //main content
