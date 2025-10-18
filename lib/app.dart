@@ -53,6 +53,7 @@ class AppDart extends HookWidget {
           ],
         ),
         body: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             NavigationRail(
               selectedIndex: 0,
@@ -70,53 +71,120 @@ class AppDart extends HookWidget {
             ),
             const VerticalDivider(thickness: 1, width: 1),
 
-            Center(
-              child: AspectRatio(
-                aspectRatio: 2.0,
-                child: LineChart(
-                  LineChartData(
-                    // titlesData: FlTitlesData(
-                    //   show: true,
-                    //   rightTitles: AxisTitles(
-                    //     sideTitles: SideTitles(showTitles: false),
-                    //   ),
-                    // ),
-                    lineBarsData: [
-                      LineChartBarData(spots: [FlSpot(8, 2), FlSpot(4, 1)]),
-                    ],
+            //main content
+            Expanded(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 18),
+                      child: Column(
+                        spacing: 12,
+                        children: [
+                          Text(
+                            'Gastos de la última semana',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+
+                          SizedBox(
+                            height: 280,
+                            child: AspectRatio(
+                              aspectRatio: 2,
+                              child: LineChart(
+                                LineChartData(
+                                  titlesData: FlTitlesData(
+                                    show: true,
+                                    topTitles: AxisTitles(
+                                      sideTitles: SideTitles(showTitles: false),
+                                    ),
+                                    rightTitles: AxisTitles(
+                                      sideTitles: SideTitles(showTitles: false),
+                                    ),
+                                    bottomTitles: AxisTitles(
+                                      sideTitles: SideTitles(
+                                        showTitles: true,
+                                        interval: 1,
+                                        getTitlesWidget: (value, meta) {
+                                          switch (value.toInt()) {
+                                            case 0:
+                                              return Text('L');
+                                            case 1:
+                                              return Text('M');
+                                            case 2:
+                                              return Text('M');
+                                            case 3:
+                                              return Text('J');
+                                            case 4:
+                                              return Text('V');
+                                            case 5:
+                                              return Text('S');
+                                            case 6:
+                                              return Text('D');
+                                            default:
+                                              return Text('');
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  lineBarsData: [
+                                    LineChartBarData(
+                                      spots: [
+                                        FlSpot(0, 1),
+                                        FlSpot(1, 2),
+                                        FlSpot(2, 3),
+                                        FlSpot(3, 4),
+                                        FlSpot(4, 5),
+                                        FlSpot(5, 6),
+                                        FlSpot(6, 7),
+                                      ],
+                                      isCurved: true,
+                                      barWidth: 6,
+                                      curveSmoothness: 0.2,
+
+                                      // preventCurveOverShooting: true
+                                      belowBarData: BarAreaData(
+                                        show: true,
+                                        // applyCutOffY: true,
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Color.fromARGB(255, 121, 127, 222),
+                                            Color.fromARGB(255, 80, 89, 221),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+
+                                  extraLinesData: ExtraLinesData(
+                                    horizontalLines: [
+                                      HorizontalLine(
+                                        y: 4,
+                                        color: Color.fromARGB(
+                                          255,
+                                          129,
+                                          192,
+                                          241,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
           ],
         ),
-
-        //  Column(
-        // children: [
-        //   Row(
-        //     children: [
-        //       Container(
-        //         width: 250,
-        //         // height: MediaQuery.of(context).size.height,
-        //         // color: Colors.grey[200],
-        //         child: Column(
-        //           children: [
-        //             ListTile(title: Text('Inicio')),
-        //             ListTile(title: Text('Gastos')),
-        //             ListTile(title: Text('Configuración')),
-        //           ],
-        //         ),
-        //       ),
-        //       Card.filled(
-        //         child: Padding(
-        //           padding: const EdgeInsets.all(8.0),
-        //           child: Column(children: [Text('data')]),
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ],
-        // ),
       ),
     );
   }
